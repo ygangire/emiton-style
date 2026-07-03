@@ -16,32 +16,25 @@ export default function Hero() {
               Affordable Premium Fashion
             </p>
 
-            <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-tight text-[#111111]">
-
-              Style
-
+            <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-tight text-[#111111] tracking-tight">
+              Crafted for
               <br />
-
-              Defined
-
+              confidence.
             </h1>
 
-            <p className="mt-8 text-gray-600 text-lg leading-8 max-w-xl">
-
-              Every piece tells a story.
-
-              Every customer is family.
-
-              Style that lasts.
-
-              Relationships that last longer.
-
-            </p>
+            <div className="mt-6 space-y-3 text-lg md:text-xl text-gray-700 leading-8 max-w-xl">
+              <p className="font-medium text-[#111111]">
+                Designed for timeless elegance.
+              </p>
+              <p className="text-gray-600">
+                Worn with purpose.
+              </p>
+            </div>
 
             <div className="flex flex-wrap gap-5 mt-10">
 
               <Link
-                href="/catalog"
+                href="/shop"
                 className="px-8 py-4 rounded-full bg-[#C89B3C] text-white hover:bg-black transition"
               >
                 Shop Collection

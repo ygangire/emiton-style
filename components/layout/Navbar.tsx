@@ -3,13 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-b border-[#F1E7D6] shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-3">
 
         {/* Logo */}
@@ -28,28 +33,44 @@ export default function Navbar() {
 
           <Link
             href="/"
-            className="relative text-gray-800 hover:text-[#C89B3C] transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full"
+            className={`relative transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full ${
+              isActive("/")
+                ? "text-[#C89B3C] after:w-full font-semibold"
+                : "text-gray-800 hover:text-[#C89B3C]"
+            }`}
           >
             Home
           </Link>
 
           <Link
             href="/about"
-            className="relative text-gray-800 hover:text-[#C89B3C] transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full"
+            className={`relative transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full ${
+              isActive("/about")
+                ? "text-[#C89B3C] after:w-full font-semibold"
+                : "text-gray-800 hover:text-[#C89B3C]"
+            }`}
           >
             About
           </Link>
 
           <Link
-            href="/catalog"
-            className="relative text-gray-800 hover:text-[#C89B3C] transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full"
+            href="/shop"
+            className={`relative transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full ${
+              isActive("/shop")
+                ? "text-[#C89B3C] after:w-full font-semibold"
+                : "text-gray-800 hover:text-[#C89B3C]"
+            }`}
           >
-            Catalogue
+            Shop
           </Link>
 
           <Link
             href="/contact"
-            className="relative text-gray-800 hover:text-[#C89B3C] transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full"
+            className={`relative transition duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C89B3C] after:transition-all hover:after:w-full ${
+              isActive("/contact")
+                ? "text-[#C89B3C] after:w-full font-semibold"
+                : "text-gray-800 hover:text-[#C89B3C]"
+            }`}
           >
             Contact
           </Link>
@@ -86,19 +107,35 @@ export default function Navbar() {
 
           <div className="flex flex-col gap-6 p-6">
 
-            <Link href="/" onClick={() => setOpen(false)}>
+            <Link
+              href="/"
+              onClick={() => setOpen(false)}
+              className={isActive("/") ? "text-[#C89B3C] font-semibold" : "text-gray-800"}
+            >
               Home
             </Link>
 
-            <Link href="/about" onClick={() => setOpen(false)}>
+            <Link
+              href="/about"
+              onClick={() => setOpen(false)}
+              className={isActive("/about") ? "text-[#C89B3C] font-semibold" : "text-gray-800"}
+            >
               About
             </Link>
 
-            <Link href="/catalog" onClick={() => setOpen(false)}>
-              Catalogue
+            <Link
+              href="/shop"
+              onClick={() => setOpen(false)}
+              className={isActive("/shop") ? "text-[#C89B3C] font-semibold" : "text-gray-800"}
+            >
+              Shop
             </Link>
 
-            <Link href="/contact" onClick={() => setOpen(false)}>
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className={isActive("/contact") ? "text-[#C89B3C] font-semibold" : "text-gray-800"}
+            >
               Contact
             </Link>
 
