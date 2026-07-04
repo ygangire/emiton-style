@@ -34,3 +34,55 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+# Emiton Style
+
+Emiton Style is a premium fashion e-commerce platform built with modern web technologies.
+
+## Vision
+
+To create a premium online shopping experience while providing a powerful content management system for managing products, collections, customers and orders.
+
+This project is the first business under the Emiton Family Group and is designed to scale into a multi-business platform in the future.
+
+---
+
+## Technology Stack
+
+- Next.js 15
+- React
+- TypeScript
+- Tailwind CSS
+- Prisma 7
+- PostgreSQL (Neon)
+- Auth.js (planned)
+
+---
+
+## Features
+
+### Public Store
+
+- Home
+- Shop
+- Collections
+- Product Pages
+- About
+- Contact
+
+### Admin CMS
+
+- Dashboard
+- Products
+- Collections
+- Categories
+- Orders
+- Customers
+- Users
+- Settings
+
+---
+
+## Status
+
+🚧 Under Active Development
