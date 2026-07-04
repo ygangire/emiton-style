@@ -20,7 +20,7 @@ export default function MensCollectionPage() {
               Shop / Men
             </p>
             <h1 className="mt-6 text-4xl sm:text-5xl font-semibold leading-tight text-[#111111]">
-              Men's Collection
+              Men&apos;s Collection
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Discover elevated menswear essentials with clean lines, purposeful tailoring, and lasting versatility.

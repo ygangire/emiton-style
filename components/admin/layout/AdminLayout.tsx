@@ -8,17 +8,14 @@ import Header from "@/components/admin/layout/Header";
 import Sidebar from "@/components/admin/layout/Sidebar";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarOpenPathname, setSidebarOpenPathname] = useState<string | null>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    setIsSidebarOpen(false);
-  }, [pathname]);
+  const isSidebarOpen = sidebarOpenPathname === pathname;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsSidebarOpen(false);
+        setSidebarOpenPathname(null);
       }
     };
 
@@ -31,19 +28,25 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpenPathname(null)} />
 
       {isSidebarOpen ? (
         <button
           type="button"
           aria-label="Close sidebar overlay"
           className="fixed inset-0 z-30 bg-[#1F1F1F]/60 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={() => setSidebarOpenPathname(null)}
         />
       ) : null}
 
       <div className="min-h-screen lg:pl-64">
-        <Header onMenuClick={() => setIsSidebarOpen((prev) => !prev)} />
+        <Header
+          onMenuClick={() =>
+            setSidebarOpenPathname((currentPathname) =>
+              currentPathname === pathname ? null : pathname,
+            )
+          }
+        />
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           {children}
