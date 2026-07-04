@@ -10,6 +10,7 @@ import Sidebar from "@/components/admin/Sidebar";
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const [sidebarOpenPathname, setSidebarOpenPathname] = useState<string | null>(null);
   const pathname = usePathname();
+  const isLoginRoute = pathname === "/admin/login";
   const isSidebarOpen = sidebarOpenPathname === pathname;
 
   useEffect(() => {
@@ -25,6 +26,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  if (isLoginRoute) {
+    return children;
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
