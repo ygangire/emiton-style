@@ -7,7 +7,9 @@ export function getUserByEmail(email: string) {
       id: true,
       firstName: true,
       lastName: true,
+      name: true,
       email: true,
+      image: true,
       password: true,
       role: {
         select: {
@@ -25,7 +27,9 @@ export function getUserById(id: number) {
       id: true,
       firstName: true,
       lastName: true,
+      name: true,
       email: true,
+      image: true,
       role: {
         select: {
           name: true,

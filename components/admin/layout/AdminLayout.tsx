@@ -7,7 +7,19 @@ import { usePathname } from "next/navigation";
 import Header from "@/components/admin/layout/Header";
 import Sidebar from "@/components/admin/layout/Sidebar";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+interface AdminLayoutProps {
+  children: ReactNode;
+  user?: {
+    firstName?: string | null;
+    lastName?: string | null;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    role?: { name?: string | null } | string | null;
+  } | null;
+}
+
+export default function AdminLayout({ children, user }: AdminLayoutProps) {
   const [sidebarOpenPathname, setSidebarOpenPathname] = useState<string | null>(null);
   const pathname = usePathname();
   const isSidebarOpen = sidebarOpenPathname === pathname;
@@ -41,6 +53,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       <div className="min-h-screen lg:pl-64">
         <Header
+          user={user}
           onMenuClick={() =>
             setSidebarOpenPathname((currentPathname) =>
               currentPathname === pathname ? null : pathname,

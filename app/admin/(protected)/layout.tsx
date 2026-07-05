@@ -7,11 +7,13 @@ export default async function AdminProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
+  let user;
+
   try {
-    await requireUser();
+    user = await requireUser();
   } catch {
     redirect("/admin/login");
   }
 
-  return <AdminLayout>{children}</AdminLayout>;
+  return <AdminLayout user={user}>{children}</AdminLayout>;
 }
