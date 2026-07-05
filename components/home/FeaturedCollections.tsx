@@ -35,8 +35,8 @@ export default function FeaturedCollections() {
           </h2>
 
           <p className="mt-6 text-[#E7D9C9] max-w-2xl mx-auto">
-            From elegant ladies' wear to stylish men's outfits and comfortable
-            children's clothing, Emiton Style has something for every member
+            From elegant ladies&apos; wear to stylish men&apos;s outfits and comfortable
+            children&apos;s clothing, Emiton Style has something for every member
             of the family.
           </p>
 
