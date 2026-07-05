@@ -7,7 +7,10 @@ import { getUserByEmail } from "@/lib/auth/users";
 import { prisma } from "@/lib/prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET,
+  secret:
+    process.env.NEXTAUTH_SECRET ??
+    process.env.AUTH_SECRET ??
+    "development-secret-change-me",
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
