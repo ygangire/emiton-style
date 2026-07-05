@@ -7,6 +7,7 @@ import { getUserByEmail } from "@/lib/auth/users";
 import { prisma } from "@/lib/prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
@@ -21,7 +22,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = typeof credentials.email === "string" ? credentials.email : "";
+        const email =
+          typeof credentials.email === "string"
+            ? credentials.email.trim().toLowerCase()
+            : "";
         const password =
           typeof credentials.password === "string" ? credentials.password : "";
 
@@ -58,6 +62,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.id = user.id ?? "";
         token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.email = user.email;
         token.role = user.role;
       }
 
@@ -70,6 +75,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           typeof token.firstName === "string" ? token.firstName : "";
         session.user.lastName =
           typeof token.lastName === "string" ? token.lastName : "";
+        session.user.email = typeof token.email === "string" ? token.email : "";
         session.user.role = typeof token.role === "string" ? token.role : "";
       }
 

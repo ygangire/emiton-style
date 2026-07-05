@@ -1,9 +1,7 @@
-import AdminLayout from "@/components/admin/AdminLayout";
-
-export default function AdminRouteLayout({
+export default async function AdminLayoutRoot({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminLayout>{children}</AdminLayout>;
+  return <>{children}</>;
 }

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
+import { signIn, type SignInResponse } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import PasswordInput from "@/components/admin/auth/PasswordInput";
 
@@ -59,6 +61,8 @@ export default function LoginForm({
     password: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authErrorState, setAuthErrorState] = useState<string | undefined>(undefined);
+  const router = useRouter();
 
   const visibleErrors = useMemo(
     () => ({
@@ -90,15 +94,30 @@ export default function LoginForm({
       return;
     }
 
+    setAuthErrorState(undefined);
     setIsSubmitting(true);
 
     try {
       if (onSubmit) {
         await onSubmit(values);
       } else {
-        await new Promise((resolve) => {
-          window.setTimeout(resolve, 650);
-        });
+        const res = (await signIn("credentials", {
+          redirect: false,
+          email: values.email,
+          password: values.password,
+          callbackUrl: "/admin",
+        })) as SignInResponse | undefined;
+
+        const errorCode = res?.error;
+        if (errorCode) {
+          setAuthErrorState(
+            errorCode === "CredentialsSignin"
+              ? "Invalid email or password."
+              : "Authentication failed."
+          );
+        } else {
+          router.push("/admin");
+        }
       }
     } finally {
       setIsSubmitting(false);
@@ -107,12 +126,12 @@ export default function LoginForm({
 
   return (
     <form className="space-y-5" noValidate onSubmit={handleSubmit}>
-      {authError ? (
+      {(authError || authErrorState) ? (
         <div
           role="alert"
           className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
         >
-          {authError}
+          {authError || authErrorState}
         </div>
       ) : null}
 

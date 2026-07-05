@@ -3,13 +3,34 @@ import { prisma } from "@/lib/prisma/client";
 export function getUserByEmail(email: string) {
   return prisma.user.findUnique({
     where: { email },
-    include: { role: true },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      password: true,
+      role: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
 }
 
 export function getUserById(id: number) {
   return prisma.user.findUnique({
     where: { id },
-    include: { role: true },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      role: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
 }
