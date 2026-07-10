@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Product } from "@prisma/client";
 import StatusBadge from "./StatusBadge";
 
@@ -25,12 +26,12 @@ export default function ProductRow({ product }: ProductRowProps) {
       </td>
       <td className="px-6 py-4">
         <div className="flex gap-2">
-          <button
-            type="button"
+          <Link
+            href={`/admin/products/${product.id}/edit`}
             className="rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100"
           >
             Edit
-          </button>
+          </Link>
           <button
             type="button"
             className="rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100"
