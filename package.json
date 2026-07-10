@@ -39,5 +39,6 @@
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
-  }
+  },
+  "postinstall": "prisma generate"
 }
