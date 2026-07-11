@@ -50,3 +50,29 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+  await prisma.collection.createMany({
+  data: [
+    {
+      name: "Men",
+      slug: "men",
+      description: "Men's fashion",
+    },
+    {
+      name: "Ladies",
+      slug: "ladies",
+      description: "Ladies' fashion",
+    },
+    {
+      name: "Teens",
+      slug: "teens",
+      description: "Teen fashion",
+    },
+    {
+      name: "Kids",
+      slug: "kids",
+      description: "Kids' fashion",
+    },
+  ],
+  skipDuplicates: true,
+});
