@@ -194,3 +194,34 @@ export async function updateProduct(
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
+
+export interface DeleteProductState {
+  error?: string;
+}
+
+export async function deleteProduct(
+  id: number
+): Promise<DeleteProductState> {
+  if (!id || isNaN(id)) {
+    return { error: "Invalid product ID." };
+  }
+
+  const product = await prisma.product.findUnique({
+    where: { id },
+  });
+
+  if (!product) {
+    return { error: "Product not found." };
+  }
+
+  try {
+    await prisma.product.delete({
+      where: { id },
+    });
+  } catch {
+    return { error: "Failed to delete product. Please try again." };
+  }
+
+  revalidatePath("/admin/products");
+  return {};
+}

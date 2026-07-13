@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Product } from "@prisma/client";
 import StatusBadge from "./StatusBadge";
+import DeleteProductButton from "./DeleteProductButton";
 
 interface ProductRowProps {
   product: Product & {
@@ -32,12 +33,7 @@ export default function ProductRow({ product }: ProductRowProps) {
           >
             Edit
           </Link>
-          <button
-            type="button"
-            className="rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100"
-          >
-            Delete
-          </button>
+          <DeleteProductButton productId={product.id} />
         </div>
       </td>
     </tr>
