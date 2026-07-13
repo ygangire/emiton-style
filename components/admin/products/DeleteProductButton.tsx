@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trash2 } from "lucide-react";
 import { deleteProduct, type DeleteProductState } from "@/lib/actions/product.actions";
 
 interface DeleteProductButtonProps {
@@ -30,9 +31,10 @@ export default function DeleteProductButton({ productId }: DeleteProductButtonPr
       type="button"
       onClick={handleDelete}
       disabled={isPending}
-      className="rounded-md border border-gray-300 px-3 py-1 text-sm text-red-600 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-md p-2 text-red-600 hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+      title="Delete product"
     >
-      {isPending ? "Deleting..." : "Delete"}
+      <Trash2 size={16} />
     </button>
   );
 }

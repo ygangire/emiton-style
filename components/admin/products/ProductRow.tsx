@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Edit } from "lucide-react";
 import type { Product } from "@prisma/client";
 import StatusBadge from "./StatusBadge";
 import DeleteProductButton from "./DeleteProductButton";
@@ -29,9 +30,10 @@ export default function ProductRow({ product }: ProductRowProps) {
         <div className="flex gap-2">
           <Link
             href={`/admin/products/${product.id}/edit`}
-            className="rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100"
+            className="rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-[#1F1F1F]"
+            title="Edit product"
           >
-            Edit
+            <Edit size={16} />
           </Link>
           <DeleteProductButton productId={product.id} />
         </div>
