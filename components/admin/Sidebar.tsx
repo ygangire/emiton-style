@@ -27,14 +27,14 @@ const menuItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Products",
-    href: "/admin/products",
-    icon: ShoppingBag,
-  },
-  {
     title: "Collections",
     href: "/admin/collections",
     icon: FolderKanban,
+  },
+  {
+    title: "Products",
+    href: "/admin/products",
+    icon: ShoppingBag,
   },
   {
     title: "Categories",

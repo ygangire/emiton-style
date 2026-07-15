@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Edit } from "lucide-react";
 import type { Product } from "@prisma/client";
-import StatusBadge from "./StatusBadge";
+import StatusBadge from "@/components/admin/common/StatusBadge";
 import DeleteProductButton from "./DeleteProductButton";
 
 interface ProductRowProps {
