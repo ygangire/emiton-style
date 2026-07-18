@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit } from "lucide-react";
 import StatusBadge from "@/components/admin/common/StatusBadge";
+import DeleteCategoryButton from "./DeleteCategoryButton";
 import type { CategoryListItem } from "@/lib/actions/category.actions";
 
 interface CategoryRowProps {
@@ -28,14 +29,7 @@ export default function CategoryRow({ category }: CategoryRowProps) {
           >
             <Edit size={16} />
           </Link>
-          <button
-            type="button"
-            className="rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-red-600"
-            title="Delete category"
-            disabled
-          >
-            <Trash2 size={16} />
-          </button>
+          <DeleteCategoryButton categoryId={category.id} />
         </div>
       </td>
     </tr>

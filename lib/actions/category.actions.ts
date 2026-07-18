@@ -110,6 +110,48 @@ export async function createCategory(
   redirect("/admin/categories");
 }
 
+export interface DeleteCategoryState {
+  error?: string;
+}
+
+export async function deleteCategory(
+  id: number
+): Promise<DeleteCategoryState> {
+  if (!id || isNaN(id)) {
+    return { error: "Invalid category ID." };
+  }
+
+  const category = await prisma.category.findUnique({
+    where: { id },
+    include: {
+      _count: {
+        select: {
+          products: true,
+        },
+      },
+    },
+  });
+
+  if (!category) {
+    return { error: "Category not found." };
+  }
+
+  if (category._count.products > 0) {
+    return { error: "Cannot delete a category that contains products." };
+  }
+
+  try {
+    await prisma.category.delete({
+      where: { id },
+    });
+  } catch {
+    return { error: "Failed to delete category. Please try again." };
+  }
+
+  revalidatePath("/admin/categories");
+  return {};
+}
+
 export async function updateCategory(
   prevState: CategoryFormState | undefined,
   formData: FormData
