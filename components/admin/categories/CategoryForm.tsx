@@ -3,23 +3,34 @@
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Collection } from "@prisma/client";
-import { createCategory, type CategoryFormState } from "@/lib/actions/category.actions";
+import { createCategory, updateCategory, type CategoryFormState } from "@/lib/actions/category.actions";
+import type { Category } from "@prisma/client";
 
 interface CategoryFormProps {
   collections: Collection[];
+  mode?: "create" | "edit";
+  category?: Category & {
+    collection: { id: number; name: string };
+  };
 }
 
-export default function CategoryForm({ collections }: CategoryFormProps) {
+export default function CategoryForm({
+  collections,
+  mode = "create",
+  category,
+}: CategoryFormProps) {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState<CategoryFormState | undefined, FormData>(
-    createCategory,
+    mode === "edit" ? updateCategory : createCategory,
     undefined
   );
 
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [collectionId, setCollectionId] = useState("");
-  const [isActive, setIsActive] = useState(true);
+  const [name, setName] = useState(category?.name ?? "");
+  const [slug, setSlug] = useState(category?.slug ?? "");
+  const [collectionId, setCollectionId] = useState(
+    category?.collectionId ? String(category.collectionId) : ""
+  );
+  const [isActive, setIsActive] = useState(category?.isActive ?? true);
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
 
   const handleNameChange = (value: string) => {
@@ -38,10 +49,15 @@ export default function CategoryForm({ collections }: CategoryFormProps) {
 
   return (
     <form action={formAction} className="space-y-6">
+      {mode === "edit" && category && (
+        <input type="hidden" name="id" value={category.id} />
+      )}
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-[#1F1F1F]">Create Category</h2>
+        <h2 className="text-lg font-semibold text-[#1F1F1F]">
+          {mode === "edit" ? "Edit Category Details" : "Create Category"}
+        </h2>
         <p className="mt-1 text-sm text-gray-500">
-          Create a new category for your store.
+          {mode === "edit" ? "Edit category details." : "Create a new category for your store."}
         </p>
 
         <div className="mt-6 space-y-4">
@@ -157,7 +173,7 @@ export default function CategoryForm({ collections }: CategoryFormProps) {
               className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
             />
           ) : null}
-          {isPending ? "Saving..." : "Save Category"}
+          {isPending ? "Saving..." : mode === "edit" ? "Update Category" : "Save Category"}
         </button>
 
         <button
