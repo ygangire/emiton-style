@@ -7,6 +7,7 @@ import {
   ShoppingBag,
   FolderKanban,
   Tags,
+  Image,
   Package,
   Users,
   UserCog,
@@ -40,6 +41,11 @@ const menuItems = [
     title: "Categories",
     href: "/admin/categories",
     icon: Tags,
+  },
+  {
+    title: "Media",
+    href: "/admin/media",
+    icon: Image,
   },
   {
     title: "Orders",
