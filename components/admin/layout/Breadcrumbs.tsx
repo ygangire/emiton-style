@@ -8,6 +8,7 @@ const labels: Record<string, string> = {
   products: "Products",
   collections: "Collections",
   categories: "Categories",
+  media: "Media",
   orders: "Orders",
   customers: "Customers",
   users: "Users",

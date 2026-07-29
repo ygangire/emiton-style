@@ -19,8 +19,14 @@ export interface MediaFormState {
   message?: string;
 }
 
-// Get all media with optional search and folder filter
-export async function getMedia(search?: string, folder?: string) {
+export type MediaSortOption = "newest" | "oldest" | "name";
+
+// Get all media with optional search, folder filter, and sorting
+export async function getMedia(
+  search?: string,
+  folder?: string,
+  sort: MediaSortOption = "newest"
+) {
   const where: {
     OR?: Array<{
       filename?: { contains: string; mode: "insensitive" };
@@ -45,11 +51,17 @@ export async function getMedia(search?: string, folder?: string) {
     where.folder = folder;
   }
 
+  // Determine sort order
+  const orderBy: { createdAt?: "asc" | "desc"; originalName?: "asc" | "desc" } =
+    sort === "oldest"
+      ? { createdAt: "asc" }
+      : sort === "name"
+        ? { originalName: "asc" }
+        : { createdAt: "desc" };
+
   return await prisma.media.findMany({
     where,
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy,
   });
 }
 

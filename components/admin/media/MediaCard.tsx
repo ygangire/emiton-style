@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Trash2, Check } from "lucide-react";
+import { Copy, Check } from "lucide-react";
+import DeleteMediaDialog from "./DeleteMediaDialog";
 
 export interface MediaItem {
   id: string;
@@ -25,6 +26,7 @@ interface MediaCardProps {
   onSelect?: (media: MediaItem) => void;
   isSelected?: boolean;
   showActions?: boolean;
+  onDelete?: () => void;
 }
 
 export default function MediaCard({
@@ -32,21 +34,21 @@ export default function MediaCard({
   onSelect,
   isSelected = false,
   showActions = true,
+  onDelete,
 }: MediaCardProps) {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showCopied, setShowCopied] = useState(false);
+  const [showCopiedUrl, setShowCopiedUrl] = useState(false);
+  const [showCopiedId, setShowCopiedId] = useState(false);
 
   const handleCopyUrl = async () => {
     await navigator.clipboard.writeText(media.url);
-    setShowCopied(true);
-    setTimeout(() => setShowCopied(false), 2000);
+    setShowCopiedUrl(true);
+    setTimeout(() => setShowCopiedUrl(false), 2000);
   };
 
-  const handleDelete = async () => {
-    if (confirm("Are you sure you want to delete this media?")) {
-      setIsDeleting(true);
-      await deleteMedia(media.id);
-    }
+  const handleCopyId = async () => {
+    await navigator.clipboard.writeText(media.id);
+    setShowCopiedId(true);
+    setTimeout(() => setShowCopiedId(false), 2000);
   };
 
   const formatFileSize = (bytes: number) => {
@@ -78,7 +80,10 @@ export default function MediaCard({
       </div>
 
       <div className="p-3">
-        <p className="truncate text-sm font-medium text-[#1F1F1F]" title={media.originalName}>
+        <p
+          className="truncate text-sm font-medium text-[#1F1F1F]"
+          title={media.originalName}
+        >
           {media.originalName}
         </p>
         <div className="mt-1 flex items-center justify-between text-xs text-gray-500">
@@ -98,18 +103,32 @@ export default function MediaCard({
             onClick={handleCopyUrl}
             className="rounded-lg bg-white/90 p-1.5 text-gray-600 shadow-sm backdrop-blur-sm hover:bg-white"
             title="Copy URL"
+            aria-label="Copy image URL"
           >
-            {showCopied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+            {showCopiedUrl ? (
+              <Check size={14} className="text-green-600" />
+            ) : (
+              <Copy size={14} />
+            )}
           </button>
           <button
             type="button"
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className="rounded-lg bg-white/90 p-1.5 text-red-600 shadow-sm backdrop-blur-sm hover:bg-white disabled:opacity-50"
-            title="Delete"
+            onClick={handleCopyId}
+            className="rounded-lg bg-white/90 p-1.5 text-gray-600 shadow-sm backdrop-blur-sm hover:bg-white"
+            title="Copy ID"
+            aria-label="Copy image ID"
           >
-            <Trash2 size={14} />
+            {showCopiedId ? (
+              <Check size={14} className="text-green-600" />
+            ) : (
+              <span className="text-xs font-mono">ID</span>
+            )}
           </button>
+          <DeleteMediaDialog
+            mediaId={media.id}
+            mediaName={media.originalName}
+            onDeleteComplete={onDelete}
+          />
         </div>
       )}
 
